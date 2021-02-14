@@ -69,7 +69,7 @@ class App extends React.Component {
       comparing: true
     })
     const code = this.getCodeFromInput();
-    axios.post("http://localhost:5000/api/users/compile", {
+    axios.post("https://q-tv.herokuapp.com/api/content/compile", {
       code
     }).then(res => {
       const data = res.data.substring(153).split("|");
