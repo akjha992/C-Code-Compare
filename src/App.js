@@ -1,27 +1,22 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
-import raw from './main.js'; // Relative path to your File
 const defaultFunctionCode = (fname) => {
-  return `void ${fname}(){
+  return `int main(){
     /*****Instructions**********
-     * Remove any #include directives or global variables
      * All inputs should be read using cin (dont use scanf)
      * Code must output using cout (dont use printf)
-     * If there are other functions, place them above this function 
-     * and make sure their names dont coincide in two codes
     */
     cout<<"Output from ${fname}"<<endl;
 }`;
 }
-const defaultInputGenCode = `string myInputGen()
+const defaultInputGenCode = `int main()
 {
     /*****Instructions**********
-     * This function should not print anything.
-     * You can use rand() function to randomize inputs
-     * Use to_string() method to put integers input
+     * This function should print anything the desired input.
+     * Only use cout for printing (Dont use printf)
     */
-    return "your input";
+    cout<<"your input";
 }`;
 function decodeHTMLEntities(text) {
   var textArea = document.createElement('textarea');
@@ -45,20 +40,10 @@ class App extends React.Component {
       comparing: false,
       timeout: 10
     }
-    this.getCodeFromInput = this.getCodeFromInput.bind(this);
     this.compare = this.compare.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
   }
-  getCodeFromInput() {
-    const code = `
-    ${raw.replaceAll("REPLACE_ME_WITH_A_CONSTANT_VALUE", this.state.maxTries)}
-    ${this.state.myInputFunctionCode}
-    ${this.state.f1}
-    ${this.state.f2}`;
-    return code;
-  }
   compare() {
-    axios.defaults.timeout = this.state.timeout * 1000;
     this.setState({
       status: `Comparing both function with ${this.state.maxTries} random inputs with a timeout of ${this.state.timeout} seconds.`,
       consoleOutput: {
@@ -68,26 +53,28 @@ class App extends React.Component {
       },
       comparing: true
     })
-    const code = this.getCodeFromInput();
-    axios.post("https://q-tv.herokuapp.com/api/content/compile", {
-      code
+    axios.post("https://q-tv.herokuapp.com/api/compile", {
+      input: this.state.myInputFunctionCode,
+      f1: this.state.f1,
+      f2: this.state.f2,
+      maxTries: this.state.maxTries,
+      timeout: this.state.timeout,
     }).then(res => {
-      const data = res.data.substring(153).split("|");
-      console.log(data);
-      if (data.length === 3) {
+      console.log(res.data);
+      if(res.data.success!==0){
         this.setState({
-          status: "Found Mismatch!",
+          status: res.data.message,
           consoleOutput: {
-            input: data[0],
-            f1_out: data[1],
-            f2_out: data[2]
+            input: res.data.input,
+            f1_out: res.data.output1,
+            f2_out: res.data.output2
           },
-          showIssue: true,
+          showIssue: false,
           comparing: false
         });
-      } else {
+      }else{
         this.setState({
-          status: decodeHTMLEntities(data[0]),
+          status: `${res.data.message}\n${decodeHTMLEntities(res.data.data)}`,
           showIssue: false,
           comparing: false
         });
@@ -95,7 +82,7 @@ class App extends React.Component {
     })
       .catch(err => {
         this.setState({
-          status: "Timeout reached!",
+          status: "Error reaching server!",
           showIssue: false,
           comparing: false
         });
