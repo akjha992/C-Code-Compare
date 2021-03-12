@@ -51,7 +51,7 @@ int main(){
       minHeight: 20,
       maxHeight: 80,
       height: 50,
-      terminalMessage: decodeHTMLEntities(`Output Pane\n\n`),
+      terminalMessage: [`Output Pane`],
       title1: 'CustomInputGenerator.cpp',
       title2: 'Program1.cpp',
       title3: 'Program2.cpp',
