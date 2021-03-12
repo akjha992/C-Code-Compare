@@ -1,70 +1,64 @@
-* {
-  margin: 0px;
-  padding: 0px;
-  height:100%;
-  width: 100%;
-  box-sizing: border-box;
-}
-.App{
-  display: flex;
-  height: 95%;
-  width: 100%;
-}
-.editor{
-  background-color: whitesmoke;
-  height: 50%;
-}
-.function-codes{
-  /* height:100%; */
-  display: flex;
-}
-.f1, .f2{
-  width: 50%;
-  background-color: crimson;
-}
-.functions-box{
-  background-color: whitesmoke;
-}
-textarea{
-  font-size: 12px;
-  padding: 10px;
-  border: none;
-  outline: 2px solid black;
-  height: 100%;
+.top-part{
+    display: flex;
 }
 .console{
-  font-size: 20px;
-  padding: 20px;
-  color: white;
-  height: 100%;
-  background-color: black;
-  outline: 2px solid black;
-  display: flex;
-  flex-direction: column;
+    font-family: monospace;
+    background-color: rgb(30, 31, 38);
+    padding: 10px 15px;
+    font-size: 8px;
+    color: white;
+    overflow-y: scroll;
 }
-.header{
-  display: flex;
-  height:5%;
-  padding: 10px;
+.horizontal-border{
+    background-color: rgb(51, 54, 66);
+    height:6px;
+    z-index: 2;
+    position: relative;
+    cursor: row-resize;
 }
-select{
-  width: 200px;
-  margin-left: 10px;
-  margin-right: 80px;
+body{
+    background: black;
 }
-.compareButton{
-  width: 100px;
-  height:30px;
-  margin-right: 80px;
+.command-pane{
+    display: flex;
+    align-items: center;
+    height:20px;
+    /* background: #565a66; */
+    background-color: rgb(30, 31, 38);
+    /* border-top:5px solid rgb(51, 54, 66); */
+    border-left:6px solid rgb(51, 54, 66);
+    border-right:6px solid rgb(51, 54, 66);
 }
-.consoleEditor{
-  font-size: 18px;
-  /* background-color: black;
-  color:white; */
-  background-color: cornsilk;
-  outline: 2px solid black;
-  margin: 10px 0px 20px 0
+.command-pane-buttons{
+    font-size: 8px;
+    padding: 5px 10px;
+    border:none;
+    background: none;
+    cursor: pointer;
+    color: white;
+    font-weight: bolder;
+    outline: none;
 }
-.headline{
-  height:20px
+.console-line-item{
+    height: auto;
+    color: white;
+}
+.console-textarea{
+    margin-bottom: 10px;
+    margin-top: 2px;
+    max-height: 50px;
+    height: auto;
+    overflow-y: scroll;
+    width: 100%;
+    background: transparent;
+    resize: none;
+    color: white;
+    font-size: 8px;
+    padding: 3px;
+    border: 1px solid white;
+    font-family: monospace;
+    white-space: pre-line;
+}
+.result-div{
+    height: auto;
 }

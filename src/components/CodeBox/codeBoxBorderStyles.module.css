@@ -1,0 +1,17 @@
+.border{
+    background-color: rgb(51, 54, 66);
+    width:6px;
+    z-index: 2;
+    position: relative;
+}
+.borderNonStatic{
+    cursor: col-resize;
+}
+.slider{
+    position: absolute;
+    width: 600px;
+    left:0;
+    z-index: -1;
+    background-color: rgb(51, 54, 66);
+    font-size: 1px;
+}
